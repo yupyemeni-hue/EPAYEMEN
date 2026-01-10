@@ -1,45 +1,48 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>إباي – المنصة البيئية الوطنية</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة إباي - الصفحة الرئيسية</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <header>
+        <img src="assets/images/logo.png" alt="شعار إباي" class="logo">
+        <h1>منصة إباي للبيئة في اليمن</h1>
+    </header>
 
-<header>
-  <img src="assets/images/logo.png" alt="شعار المنصة">
-  <h1>إباي – الهيئة العامة لحماية البيئة</h1>
-  <nav>
-    <a href="index.html">الرئيسية</a>
-    <a href="maps.html">الخرائط</a>
-    <a href="governorates.html">المحافظات</a>
-    <a href="indicators.html">المؤشرات</a>
-    <a href="news.html">الأخبار</a>
-    <a href="about.html">حول</a>
-  </nav>
-</header>
+    <nav>
+        <ul>
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="maps.html">الخرائط</a></li>
+            <li><a href="governorates.html">المحافظات</a></li>
+            <li><a href="indicators.html">المؤشرات البيئية</a></li>
+            <li><a href="news.html">الأخبار</a></li>
+            <li><a href="about.html">عن المنصة</a></li>
+        </ul>
+    </nav>
 
-<main>
-  <section id="welcome">
-    <h2>أهلاً بكم في المنصة البيئية الوطنية</h2>
-    <p>عرض مؤشرات بيئية حقيقية لكل محافظات اليمن، خرائط تفاعلية، أخبار وتنبيهات.</p>
-  </section>
+    <main>
+        <section class="intro">
+            <h2>أحدث المؤشرات البيئية في اليمن</h2>
+            <div id="overview">
+                <!-- سيتم ملؤه تلقائيًا بواسطة data.js و ui.js -->
+            </div>
+        </section>
 
-  <section id="highlights">
-    <h3>أهم البيانات الحالية</h3>
-    <div id="panel"></div>
-  </section>
-</main>
+        <section class="highlights">
+            <h2>خرائط تفاعلية</h2>
+            <iframe src="maps.html" frameborder="0" width="100%" height="600"></iframe>
+        </section>
+    </main>
 
-<footer>
-  © إباي – الهيئة العامة لحماية البيئة
-</footer>
+    <footer>
+        <p>&copy; 2026 الهيئة العامة لحماية البيئة - إباي</p>
+    </footer>
 
-<script src="assets/js/config.js"></script>
-<script src="assets/js/data.js"></script>
-<script src="assets/js/map.js"></script>
-<script src="assets/js/ui.js"></script>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/ui.js"></script>
 </body>
 </html>
