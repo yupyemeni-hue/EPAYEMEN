@@ -94,3 +94,24 @@ button:hover {
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
+.language-switcher {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 2000;
+    display: flex;
+    gap: 5px;
+}
+
+.language-switcher button {
+    padding: 5px 12px;
+    font-size: 12px;
+    background: var(--dark-teal);
+    color: white;
+    border: 1px solid var(--light-green);
+    border-radius: 20px;
+}
+
+.language-switcher button:hover {
+    background: var(--accent-blue);
+}
