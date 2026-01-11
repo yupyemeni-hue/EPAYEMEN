@@ -30,3 +30,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+document.addEventListener("DOMContentLoaded", () => {
+    const info = document.getElementById("governorate-info");
+
+    if (!info || typeof governorates === "undefined") return;
+
+    governorates.forEach(gov => {
+        const btn = document.getElementById(`btn-${gov.name}`);
+        if (!btn) return;
+
+        btn.addEventListener("click", () => {
+            info.innerHTML = `
+                <h3>${gov.name}</h3>
+                <ul>
+                    <li>درجة الحرارة: ${gov.temp} °C</li>
+                    <li>الرطوبة: ${gov.humidity} %</li>
+                    <li>الرياح: ${gov.wind} كم/س</li>
+                    <li>الأمطار: ${gov.rain} مم</li>
+                    <li>CO₂: ${gov.co2 ?? indicators.co2} ppm</li>
+                    <li>جودة الهواء: ${gov.airQuality ?? indicators.airQuality}</li>
+                </ul>
+            `;
+        });
+    });
+});
