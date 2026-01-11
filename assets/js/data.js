@@ -24,3 +24,15 @@ async function getGovernorateUpdate(govName) {
         return liveData;
     }
 }
+async function getAirPollution(lat, lon) {
+    const key = API_KEYS.weather;
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${key}`);
+        const data = await response.json();
+        const aqi = data.list[0].main.aqi;
+        const levels = ["ممتاز", "جيد", "متوسط", "ملوث", "خطر جداً"];
+        return levels[aqi - 1];
+    } catch (e) {
+        return "غير متوفر";
+    }
+}
