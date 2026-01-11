@@ -46,3 +46,25 @@ document.addEventListener("DOMContentLoaded", () => {
     // ضبط اللغة الافتراضية
     switchLanguage('ar');
 });
+function animateCounters() {
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+        const updateCount = () => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText;
+            const speed = 200; // سرعة الحركة
+            const inc = target / speed;
+
+            if (count < target) {
+                counter.innerText = Math.ceil(count + inc);
+                setTimeout(updateCount, 1);
+            } else {
+                counter.innerText = target;
+            }
+        };
+        updateCount();
+    });
+}
+
+// تشغيل العدادات عند تحميل الصفحة
+document.addEventListener("DOMContentLoaded", animateCounters);
