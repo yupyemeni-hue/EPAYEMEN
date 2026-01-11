@@ -16,7 +16,31 @@ function initUI() {
     updateOverview();
     updateIndicators();
 }
+// التبديل بين العربية والإنجليزية
+document.addEventListener("DOMContentLoaded", () => {
+    const btnAR = document.getElementById("lang-ar");
+    const btnEN = document.getElementById("lang-en");
 
+    btnAR?.addEventListener("click", () => {
+        document.documentElement.lang = "ar";
+        document.body.dir = "rtl";
+        updateLanguage("ar");
+    });
+
+    btnEN?.addEventListener("click", () => {
+        document.documentElement.lang = "en";
+        document.body.dir = "ltr";
+        updateLanguage("en");
+    });
+});
+
+function updateLanguage(lang) {
+    // مثال على الترجمة السريعة، يمكن توسيعها لاحقاً
+    const elements = document.querySelectorAll("[data-text-ar]");
+    elements.forEach(el => {
+        el.textContent = lang === "ar" ? el.dataset.textAr : el.dataset.textEn;
+    });
+}
 function showGovernorateData(name) {
     const g = governorates.find(x => x.name === name);
     const container = document.getElementById("governorate-data");
