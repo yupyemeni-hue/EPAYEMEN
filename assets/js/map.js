@@ -1,108 +1,39 @@
-function initMap() {
-    const container = document.getElementById("map-container");
-    if(container) {
-        container.innerHTML = `<iframe src="https://embed.windy.com/embed2.html?lat=15.5&lon=47.5&width=100%25&height=600&zoom=6&level=surface&overlay=wind&product=ecmwf" frameborder="0" width="100%" height="600"></iframe>`;
-    }
-}
-
-document.addEventListener("DOMContentLoaded", initMap);
 document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("map-container");
     const tabs = document.querySelectorAll(".tab-btn");
+    const infoDiv = document.getElementById("governorate-info");
 
+    // دالة تحميل الخريطة بناءً على النوع (استخدام Windy API المتقدم)
     function loadMap(type) {
-        let src = "";
+        let overlay = "wind";
+        let product = "ecmwf";
+
         switch(type) {
-            case "wind":
-                src = "https://embed.windy.com/embed2.html?lat=15.5&lon=47.5&width=100%25&height=600&zoom=6&level=surface&overlay=wind&product=ecmwf";
-                break;
-            case "temperature":
-                src = "https://embed.windy.com/embed2.html?lat=15.5&lon=47.5&width=100%25&height=600&zoom=6&level=surface&overlay=temp&product=ecmwf";
-                break;
-            case "rain":
-                src = "https://embed.windy.com/embed2.html?lat=15.5&lon=47.5&width=100%25&height=600&zoom=6&level=surface&overlay=rain&product=ecmwf";
-                break;
-            case "vegetation":
-                src = "https://example.com/embed-vegetation.html"; // نضع رابط خارجي للغطاء النباتي لاحقاً
-                break;
-            case "air":
-                src = "https://example.com/embed-air.html"; // رابط خارجي لجودة الهواء
-                break;
+            case "wind": overlay = "wind"; break;
+            case "temperature": overlay = "temp"; break;
+            case "rain": overlay = "rain"; break;
+            case "vegetation": 
+                // استخدام خريطة الأقمار الصناعية للغطاء النباتي
+                container.innerHTML = `<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3800000!2d48.5!3d15.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sar!2sye!4v1625612345678!5m2!1sar!2sye" width="100%" height="600" style="border:0; filter: saturate(1.5) contrast(1.2);" allowfullscreen=""></iframe>`;
+                return;
+            case "air": 
+                // ربط خريطة جودة الهواء العالمية (WAQI)
+                container.innerHTML = `<iframe src="https://waqi.info/ar/#/c/15.352/44.208/6z" width="100%" height="600" frameborder="0"></iframe>`;
+                return;
         }
-        container.innerHTML = `<iframe src="${src}" frameborder="0" width="100%" height="600"></iframe>`;
+        
+        container.innerHTML = `<iframe src="https://embed.windy.com/embed2.html?lat=15.5&lon=47.5&zoom=6&level=surface&overlay=${overlay}&product=${product}&menu=&message=true&marker=true&calendar=now&pressure=true&type=map&location=coordinates&detail=true&metricWind=km%2Fh&metricTemp=%C2%B0C" frameborder="0" width="100%" height="600"></iframe>`;
     }
 
+    // تفعيل التبويبات
     tabs.forEach(tab => {
         tab.addEventListener("click", () => {
+            tabs.forEach(t => t.style.background = ""); // إعادة ضبط الألوان
+            tab.style.background = "#2d6a4f"; // تمييز الزر النشط
             loadMap(tab.dataset.map);
         });
     });
-// map.js
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    // المرجع لبطاقة عرض بيانات المحافظة
-    const infoDiv = document.getElementById("governorate-info");
-
-    // دالة لتحديث البطاقة عند اختيار محافظة
-    function updateGovernorateInfo(governorateName) {
-        // البحث عن المحافظة في بيانات governorates
-        const gov = governorates.find(g => g.name === governorateName);
-        if (!gov) return;
-
-        // تحديث البطاقة بالبيانات
-        infoDiv.innerHTML = `
-            <h3>${gov.name}</h3>
-            <ul>
-                <li>درجة الحرارة: ${gov.temp} °C</li>
-                <li>الرطوبة: ${gov.humidity} %</li>
-                <li>الرياح: ${gov.wind} كم/س</li>
-                <li>الأمطار: ${gov.rain} مم</li>
-                <li>CO₂: ${gov.co2 ?? indicators.co2} ppm</li>
-                <li>جودة الهواء: ${gov.airQuality ?? indicators.airQuality}</li>
-            </ul>
-        `;
-
-        // هنا يمكن ربط الخرائط لتحديث موقع أو تظليل المحافظة المحددة
-        highlightGovernorateOnMap(governorateName);
-    }
-
-    // دالة لتظليل المحافظة على الخريطة (مثال placeholder)
-    function highlightGovernorateOnMap(governorateName) {
-        // يمكنك هنا استخدام المكتبة المستخدمة للخرائط مثل Leaflet أو Windy API
-        // لتغيير لون المحافظة أو التكبير على موقعها
-        console.log(`تحديث موقع المحافظة على الخريطة: ${governorateName}`);
-    }
-
-    // ربط كل زر بمحافظته
-    governorates.forEach(gov => {
-        const btn = document.getElementById(`btn-${gov.name}`);
-        if (btn) {
-            btn.addEventListener("click", () => updateGovernorateInfo(gov.name));
-        }
-    });
-
-    // تحديث بيانات تلقائي من API إذا كنت تستخدم مفاتيحك
-    function fetchGovernorateData() {
-        governorates.forEach(gov => {
-            // مثال: fetch من API خارجي
-            // fetch(`https://api.example.com/data?location=${gov.name}&key=YOUR_API_KEY`)
-            //     .then(res => res.json())
-            //     .then(data => {
-            //         gov.temp = data.temp;
-            //         gov.humidity = data.humidity;
-            //         gov.wind = data.wind;
-            //         gov.rain = data.rain;
-            //         gov.co2 = data.co2;
-            //         gov.airQuality = data.airQuality;
-            //     });
-        });
-    }
-
-    // استدعاء التحديث التلقائي (يمكن ضبط فترة زمنية)
-    fetchGovernorateData();
-    // setInterval(fetchGovernorateData, 5 * 60 * 1000); // كل 5 دقائق
-});
-    // تحميل الخريطة الافتراضية
+    // تحميل خريطة الرياح كافتراضية
     loadMap("wind");
 });
