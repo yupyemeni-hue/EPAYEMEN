@@ -83,3 +83,34 @@ function updateIndicators() {
 
 // شغل كل شيء عند تحميل الصفحة
 document.addEventListener("DOMContentLoaded", initUI);
+// افتراضياً يوجد div في maps.html لعرض البيانات مثل هذا:
+// <div id="governorate-info"></div>
+
+document.addEventListener("DOMContentLoaded", () => {
+    const infoDiv = document.getElementById("governorate-info");
+
+    // دالة لتحديث لوحة المعلومات عند اختيار المحافظة
+    function updateGovernorateInfo(governorateName) {
+        const gov = governorates.find(g => g.name === governorateName);
+        if (!gov) {
+            infoDiv.innerHTML = "بيانات غير متوفرة";
+            return;
+        }
+
+        infoDiv.innerHTML = `
+            <h3>${gov.name}</h3>
+            <p>درجة الحرارة: ${gov.temp !== null ? gov.temp + "°C" : "تحديث..."}</p>
+            <p>الرطوبة: ${gov.humidity !== null ? gov.humidity + "%" : "تحديث..."}</p>
+            <p>الرياح: ${gov.wind !== null ? gov.wind + " كم/س" : "تحديث..."}</p>
+            <p>الأمطار: ${gov.rain !== null ? gov.rain + " مم" : "تحديث..."}</p>
+        `;
+    }
+
+    // مثال: ربط الخريطة بالمؤشرات عند النقر على أي محافظة
+    governorates.forEach(gov => {
+        const govButton = document.getElementById(`btn-${gov.name}`);
+        if (govButton) {
+            govButton.addEventListener("click", () => updateGovernorateInfo(gov.name));
+        }
+    });
+});
