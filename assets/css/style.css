@@ -1,69 +1,96 @@
+:root {
+    --primary-green: #2d6a4f;
+    --light-green: #d8f3dc;
+    --dark-teal: #1b4332;
+    --accent-blue: #219ebc;
+    --text-dark: #2d3436;
+    --bg-light: #f8f9fa;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f7f9fc;
+    font-family: 'Cairo', sans-serif; /* سيعمل إذا أضفت خط Cairo في HTML */
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
     margin: 0;
-    padding: 0;
 }
 
 header {
-    background-color: #00796b;
+    background: linear-gradient(135deg, var(--dark-teal), var(--primary-green));
     color: white;
-    padding: 20px;
+    padding: 40px 20px;
     text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 nav ul {
     display: flex;
     justify-content: center;
-    list-style: none;
-    padding: 0;
-    background-color: #004d40;
+    flex-wrap: wrap;
+    background: var(--dark-teal);
+    padding: 10px 0;
     margin: 0;
-}
-
-nav ul li {
-    margin: 0 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 nav ul li a {
-    color: white;
+    color: #fff;
+    padding: 10px 20px;
+    display: block;
     text-decoration: none;
-    font-weight: bold;
+    transition: 0.3s;
 }
 
-main {
-    padding: 20px;
-}
-
-footer {
-    text-align: center;
-    padding: 15px;
-    background-color: #004d40;
-    color: white;
-}
-
-#governorate-data, #overview, #indicators-container, #map-container {
-    margin-top: 15px;
-    padding: 15px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-.tab-btn {
-    background-color: #004d40;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    margin: 5px;
-    cursor: pointer;
+nav ul li a:hover {
+    background: var(--primary-green);
     border-radius: 5px;
 }
 
-.tab-btn:hover {
-    background-color: #00796b;
+.gov-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    margin: 20px 0;
 }
 
-.tabs {
-    text-align: center;
-    margin-bottom: 15px;
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: var(--light-green);
+    color: var(--dark-teal);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: var(--primary-green);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.info-card {
+    background: white;
+    border-left: 5px solid var(--primary-green);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    margin: 20px 0;
+}
+
+.tabs button {
+    background: var(--accent-blue);
+    color: white;
+}
+
+#map-container {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
