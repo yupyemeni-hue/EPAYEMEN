@@ -37,7 +37,72 @@ document.addEventListener("DOMContentLoaded", () => {
             loadMap(tab.dataset.map);
         });
     });
+// map.js
 
+document.addEventListener("DOMContentLoaded", () => {
+
+    // المرجع لبطاقة عرض بيانات المحافظة
+    const infoDiv = document.getElementById("governorate-info");
+
+    // دالة لتحديث البطاقة عند اختيار محافظة
+    function updateGovernorateInfo(governorateName) {
+        // البحث عن المحافظة في بيانات governorates
+        const gov = governorates.find(g => g.name === governorateName);
+        if (!gov) return;
+
+        // تحديث البطاقة بالبيانات
+        infoDiv.innerHTML = `
+            <h3>${gov.name}</h3>
+            <ul>
+                <li>درجة الحرارة: ${gov.temp} °C</li>
+                <li>الرطوبة: ${gov.humidity} %</li>
+                <li>الرياح: ${gov.wind} كم/س</li>
+                <li>الأمطار: ${gov.rain} مم</li>
+                <li>CO₂: ${gov.co2 ?? indicators.co2} ppm</li>
+                <li>جودة الهواء: ${gov.airQuality ?? indicators.airQuality}</li>
+            </ul>
+        `;
+
+        // هنا يمكن ربط الخرائط لتحديث موقع أو تظليل المحافظة المحددة
+        highlightGovernorateOnMap(governorateName);
+    }
+
+    // دالة لتظليل المحافظة على الخريطة (مثال placeholder)
+    function highlightGovernorateOnMap(governorateName) {
+        // يمكنك هنا استخدام المكتبة المستخدمة للخرائط مثل Leaflet أو Windy API
+        // لتغيير لون المحافظة أو التكبير على موقعها
+        console.log(`تحديث موقع المحافظة على الخريطة: ${governorateName}`);
+    }
+
+    // ربط كل زر بمحافظته
+    governorates.forEach(gov => {
+        const btn = document.getElementById(`btn-${gov.name}`);
+        if (btn) {
+            btn.addEventListener("click", () => updateGovernorateInfo(gov.name));
+        }
+    });
+
+    // تحديث بيانات تلقائي من API إذا كنت تستخدم مفاتيحك
+    function fetchGovernorateData() {
+        governorates.forEach(gov => {
+            // مثال: fetch من API خارجي
+            // fetch(`https://api.example.com/data?location=${gov.name}&key=YOUR_API_KEY`)
+            //     .then(res => res.json())
+            //     .then(data => {
+            //         gov.temp = data.temp;
+            //         gov.humidity = data.humidity;
+            //         gov.wind = data.wind;
+            //         gov.rain = data.rain;
+            //         gov.co2 = data.co2;
+            //         gov.airQuality = data.airQuality;
+            //     });
+        });
+    }
+
+    // استدعاء التحديث التلقائي (يمكن ضبط فترة زمنية)
+    fetchGovernorateData();
+    // setInterval(fetchGovernorateData, 5 * 60 * 1000); // كل 5 دقائق
+});
     // تحميل الخريطة الافتراضية
     loadMap("wind");
 });
