@@ -1,29 +1,48 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const infoDiv = document.getElementById("governorate-info");
-    const buttons = document.querySelectorAll(".gov-buttons button");
+const translations = {
+    ar: {
+        title: "منصة إباي للبيئة",
+        home: "الرئيسية",
+        maps: "الخرائط",
+        govs: "المحافظات",
+        indicators: "المؤشرات",
+        news: "الأخبار",
+        about: "عن المنصة",
+        loading: "جاري جلب البيانات الحية...",
+        selectGov: "اختر محافظة لعرض بياناتها"
+    },
+    en: {
+        title: "EPAYEMEN Platform",
+        home: "Home",
+        maps: "Maps",
+        govs: "Governorates",
+        indicators: "Indicators",
+        news: "News",
+        about: "About Us",
+        loading: "Fetching live data...",
+        selectGov: "Select a governorate to view data"
+    }
+};
 
-    buttons.forEach(btn => {
-        btn.addEventListener("click", async () => {
-            const govName = btn.innerText;
-            infoDiv.innerHTML = `<p>جاري جلب البيانات الحية لـ ${govName} من الأقمار الصناعية...</p>`;
-            
-            const live = await getGovernorateUpdate(govName);
-            
-            if(live) {
-                infoDiv.innerHTML = `
-                    <div class="result-card">
-                        <h3><i class="fas fa-map-marker-alt"></i> ${govName} - الآن</h3>
-                        <div class="data-grid">
-                            <p>🌡️ درجة الحرارة: <strong>${live.temp} °C</strong></p>
-                            <p>💧 الرطوبة: <strong>${live.humidity} %</strong></p>
-                            <p>🌬️ سرعة الرياح: <strong>${live.wind} كم/س</strong></p>
-                            <p>☁️ الحالة: <strong>${live.desc}</strong></p>
-                        </div>
-                    </div>
-                `;
-            } else {
-                infoDiv.innerHTML = `<p>عذراً، تعذر الاتصال بمصدر البيانات حالياً.</p>`;
-            }
-        });
+function switchLanguage(lang) {
+    const isRtl = lang === 'ar';
+    document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
+
+    // تغيير نصوص القائمة (Navigation)
+    const navLinks = document.querySelectorAll('nav ul li a');
+    const keys = ['home', 'maps', 'govs', 'indicators', 'news', 'about'];
+    navLinks.forEach((link, index) => {
+        link.textContent = translations[lang][keys[index]];
     });
+
+    // تغيير العنوان الرئيسي
+    document.querySelector('header h1').textContent = translations[lang].title;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById('lang-ar').addEventListener('click', () => switchLanguage('ar'));
+    document.getElementById('lang-en').addEventListener('click', () => switchLanguage('en'));
+    
+    // ضبط اللغة الافتراضية
+    switchLanguage('ar');
 });
