@@ -1,75 +1,56 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة إباي - الصفحة الرئيسية</title>
-<link rel="stylesheet" href="assets/css/style.css">
-<div class="language-switcher">
-    <button id="lang-ar">عربي</button>
-    <button id="lang-en">EN</button>
-</div>
+    <title>منصة إباي للرصد البيئي السيادي - الجمهورية اليمنية</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <header>
-        <img src="assets/images/logo.png" alt="شعار إباي" class="logo">
-        <h1>منصة إباي للبيئة في اليمن</h1>
+
+<div class="dashboard-wrapper">
+    <header class="main-header">
+        <div class="logo">
+            <img src="assets/img/logo.png" alt="EPAY" onerror="this.style.display='none'">
+            <h1>منصة إباي للرصد البيئي</h1>
+        </div>
+        <div class="header-stats">
+            <div class="stat-item">متوسط حرارة اليمن: <span id="yemen-temp">--</span>°C</div>
+            <div class="stat-item">توقيت الرصد: <span id="live-time">--:--</span></div>
+        </div>
+        <div class="controls">
+            <button id="lang-btn">English</button>
+        </div>
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="index.html">الرئيسية</a></li>
-            <li><a href="maps.html">الخرائط</a></li>
-            <li><a href="governorates.html">المحافظات</a></li>
-            <li><a href="indicators.html">المؤشرات البيئية</a></li>
-            <li><a href="news.html">الأخبار</a></li>
-            <li><a href="about.html">عن المنصة</a></li>
-        </ul>
-    </nav>
+    <main class="main-content">
+        <div id="map-yemen" class="map-section"></div>
 
-    <main><section class="live-stats section">
-    <div class="stats-container">
-        <div class="stat-item">
-            <i class="fas fa-wind"></i>
-            <h3 class="counter" data-target="75">0</h3>
-            <p>مؤشر جودة الهواء (AQI)</p>
-        </div>
-        <div class="stat-item">
-            <i class="fas fa-leaf"></i>
-            <h3 class="counter" data-target="12400">0</h3>
-            <p>أشجار تم رصدها/زراعتها</p>
-        </div>
-        <div class="stat-item">
-            <i class="fas fa-tint"></i>
-            <h3 class="counter" data-target="63">0</h3>
-            <p>متوسط الرطوبة الوطنية %</p>
-        </div>
-        <div class="stat-item">
-            <i class="fas fa-shield-alt"></i>
-            <h3 class="counter" data-target="15">0</h3>
-            <p>محميات طبيعية مراقبة</p>
-        </div>
-    </div>
-    </section>
-        <section class="intro">
-            <h2>أحدث المؤشرات البيئية في اليمن</h2>
-            <div id="overview">
-                <!-- سيتم ملؤه تلقائيًا بواسطة data.js و ui.js -->
+        <aside class="info-sidebar">
+            <div class="gov-info-card">
+                <h2 id="active-gov">اختر محافظة للبدء</h2>
+                <hr>
+                <div id="data-display" class="data-grid">
+                    <p class="placeholder-text">في انتظار اختيار نقطة الرصد...</p>
+                </div>
             </div>
-        </section>
 
-        <section class="highlights">
-            <h2>خرائط تفاعلية</h2>
-            <iframe src="maps.html" frameborder="0" width="100%" height="600"></iframe>
-        </section>
+            <div class="chart-section">
+                <canvas id="ecoChart"></canvas>
+            </div>
+
+            <div id="alert-box" class="alert-container"></div>
+        </aside>
     </main>
+</div>
 
-    <footer>
-        <p>&copy; 2026 الهيئة العامة لحماية البيئة - إباي</p>
-    </footer>
-
-    <script src="assets/js/config.js"></script>
-    <script src="assets/js/data.js"></script>
-    <script src="assets/js/ui.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/map.js"></script>
+<script src="assets/js/ui.js"></script>
 </body>
 </html>
