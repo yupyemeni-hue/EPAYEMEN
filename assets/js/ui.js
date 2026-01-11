@@ -16,7 +16,42 @@ function initUI() {
     updateOverview();
     updateIndicators();
 }
-// التبديل بين العربية والإنجليزية
+// ui.js
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const infoDiv = document.getElementById("governorate-info");
+
+    // دالة لتحديث واجهة البيانات عند الضغط على زر المحافظة
+    function showGovernorateData(governorateName) {
+        const gov = governorates.find(g => g.name === governorateName);
+        if (!gov) {
+            infoDiv.innerHTML = "لا توجد بيانات لهذه المحافظة.";
+            return;
+        }
+
+        infoDiv.innerHTML = `
+            <h3>${gov.name}</h3>
+            <ul style="list-style:none; padding:0; margin:0;">
+                <li>درجة الحرارة: ${gov.temp} °C</li>
+                <li>الرطوبة: ${gov.humidity} %</li>
+                <li>الرياح: ${gov.wind} كم/س</li>
+                <li>الأمطار: ${gov.rain} مم</li>
+                <li>CO₂: ${gov.co2 ? gov.co2 : "غير متوفر"} ppm</li>
+                <li>جودة الهواء: ${gov.airQuality ? gov.airQuality : "غير متوفر"}</li>
+            </ul>
+        `;
+    }
+
+    // ربط كل زر في الواجهة
+    governorates.forEach(gov => {
+        const btn = document.getElementById(`btn-${gov.name}`);
+        if (btn) {
+            btn.addEventListener("click", () => showGovernorateData(gov.name));
+        }
+    });
+
+});// التبديل بين العربية والإنجليزية
 document.addEventListener("DOMContentLoaded", () => {
     const btnAR = document.getElementById("lang-ar");
     const btnEN = document.getElementById("lang-en");
