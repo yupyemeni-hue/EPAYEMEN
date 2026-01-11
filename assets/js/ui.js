@@ -65,27 +65,38 @@ function animateCounters() {
 async function updateLiveStats() {
     if (typeof governorates === "undefined") return;
 
-    // حساب المتوسطات من البيانات الموجودة في data.js
     const avgTemp = governorates.reduce((acc, curr) => acc + curr.temp, 0) / governorates.length;
     const avgHum = governorates.reduce((acc, curr) => acc + curr.humidity, 0) / governorates.length;
 
-    // ربط متوسط الحرارة بالعداد الأول (الذي كان هدفه 75)
     const tempCounter = document.querySelector('[data-target="75"]'); 
-    if(tempCounter) {
-        tempCounter.setAttribute('data-target', Math.round(avgTemp));
-    }
+    if(tempCounter) tempCounter.setAttribute('data-target', Math.round(avgTemp));
 
-    // ربط متوسط الرطوبة بالعداد الثالث (الذي كان هدفه 63)
     const humCounter = document.querySelector('[data-target="63"]');
-    if(humCounter) {
-        humCounter.setAttribute('data-target', Math.round(avgHum));
-    }
+    if(humCounter) humCounter.setAttribute('data-target', Math.round(avgHum));
 
-    // تشغيل الأنيميشن بعد ضبط القيم الجديدة
     animateCounters();
 }
 
-// 5. تشغيل كل الوظائف عند تحميل الصفحة
+// 5. دالة جلب الأخبار تلقائياً
+function loadNews() {
+    const newsList = document.getElementById('news-list');
+    if(!newsList) return;
+
+    const sampleNews = [
+        { title: "حملة تشجير واسعة في صنعاء", date: "2026-01-10" },
+        { title: "تحسن ملحوظ في جودة الهواء في عدن", date: "2026-01-08" },
+        { title: "تحذيرات من منخفض جوي قادم نحو المهرة", date: "2026-01-05" }
+    ];
+
+    newsList.innerHTML = sampleNews.map(n => `
+        <li class="news-card" style="background:white; margin:10px 0; padding:15px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); list-style:none; text-align:right;">
+            <h4 style="color:#004d40; margin:0;">${n.title}</h4>
+            <small style="color:#666;">${n.date}</small>
+        </li>
+    `).join('');
+}
+
+// 6. تشغيل كل الوظائف عند تحميل الصفحة (المحرك الرئيسي)
 document.addEventListener("DOMContentLoaded", () => {
     // تشغيل نظام اللغات
     const btnAr = document.getElementById('lang-ar');
@@ -97,4 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // تشغيل العدادات والبيانات
     updateLiveStats();
+
+    // تشغيل الأخبار
+    loadNews();
 });
